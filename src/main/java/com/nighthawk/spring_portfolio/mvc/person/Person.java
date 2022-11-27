@@ -51,7 +51,7 @@ public class Person {
     @Size(min=5)
     @Column(unique=true)
     @Email
-    private String email;
+    private static String email;
 
     @NotEmpty
     private String password;
@@ -92,6 +92,24 @@ public class Person {
             LocalDate birthDay = this.dob.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
             return Period.between(birthDay, LocalDate.now()).getYears(); }
         return -1;
+    }
+    
+    public String toString(){
+        return ("{ \"email\": " + this.email + ", " + "\"password\": " + this.password + ", " + "\"name\": " + this.name + ", " + "\"dob\": " + this.dob + " }" );
+    }
+
+    public static void main(String[] args){
+        LocalDate dob = LocalDate.of(2006,07,19);
+        Date date = Date.from(dob.atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+        Person person_no = new Person();
+        Person person_all = new Person("samaya2024@gmail.com","fruitloops", "Samaya Sankuratri", date);
+        System.out.println(person_no);
+        System.out.println(person_all);
+
+
+
+
     }
 
 }
