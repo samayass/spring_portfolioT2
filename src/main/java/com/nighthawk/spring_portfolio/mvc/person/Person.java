@@ -112,11 +112,6 @@ public class Person {
         }
         return -1;
     }
-
-
-    public String toString(){
-        return ("{\"email\": " + this.email + ", " + "\"password\": " + this.password + ", " + "\"name\": " + this.name + ", " + "\"dob\": " + this.dob + " \"height\": " + this.height + ", \"weight\": " + this.weight + "}" );
-    }
     public String getBmiToString() {
         return("{ \"bmi\": " + this.getBmi() +"}");
     }
@@ -124,6 +119,10 @@ public class Person {
     public String getStepToString() {
         return("{ \"step\": " + this.getStep() +"}");
     }
+
+    public String toString(){
+        return ("{\"email\": " + this.email + ", " + "\"password\": " + this.password + ", " + "\"name\": " + this.name + ", " + "\"dob\": " + this.dob + " \"height\": " + this.height + ", \"weight\": " + this.weight + "}" );
+    } 
     public static void main(String[] args){
         LocalDate dob = LocalDate.of(2006,07,19);
         Date date = Date.from(dob.atStartOfDay(ZoneId.systemDefault()).toInstant());
