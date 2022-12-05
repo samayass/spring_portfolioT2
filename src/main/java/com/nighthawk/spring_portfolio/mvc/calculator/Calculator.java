@@ -29,6 +29,7 @@ public class Calculator {
         OPERATORS.put("%", 3);
         OPERATORS.put("+", 4);
         OPERATORS.put("-", 4);
+        OPERATORS.put("^", 2);
     }
 
     // Helper definition for supported operators
@@ -53,6 +54,24 @@ public class Calculator {
 
         // calculate reverse polish notation
         this.rpnToResult();
+
+        this.checkParentheses();
+    }
+
+    private void checkParentheses() {
+        int leftParentheses = 0;
+        int rightParentheses = 0;
+        for (int i = 0; i < this.expression.length(); i++) {
+            if (this.expression.charAt(i) == '(') {
+                leftParentheses++;
+            } else if (this.expression.charAt(i) == ')') {
+                rightParentheses++;
+            }
+        }
+
+        if (leftParentheses != rightParentheses) {
+            throw new RuntimeException("Parentheses imbalance, check your parentheses.");
+        }
     }
 
     // Test if token is an operator
@@ -132,6 +151,7 @@ public class Calculator {
                 case "*":
                 case "/":
                 case "%":
+                case "^":
                     // While stack
                     // not empty AND stack top element
                     // and is an operator
@@ -169,10 +189,32 @@ public class Calculator {
             // If the token is an operator, calculate
             if (isOperator(token))
             {
-                // Pop the two top entries
-
+                double a = calcStack.pop(); // Pop the two top entries
+                double b = calcStack.pop();
                 // Calculate intermediate results
-                result = 0.0;
+                switch (token) {
+                    // b goes first, as it is popped second and must be on the left to make the equation work
+                    case "+":
+                        result = b + a;
+                        break;
+                    case "-":
+                        result = b - a;
+                        break;
+                    case "*":
+                        result = b * a;
+                        break; 
+                    case "/":
+                        result = b / a;
+                        break;
+                    case "%":
+                        result = b % a;
+                        break;
+                    case "^":
+                    result = Math.pow(b,a);
+                    break;
+                    default:
+                        break;
+                }
 
                 // Push intermediate result back onto the stack
                 calcStack.push( result );
@@ -221,5 +263,33 @@ public class Calculator {
         Calculator divisionMath = new Calculator("300/200");
         System.out.println("Division Math\n" + divisionMath);
 
+        System.out.println();
+
+        Calculator powerMath = new Calculator("2^3");
+        System.out.println("Power Math\n" + powerMath);
+
+        System.out.println();
+
+        System.out.println("Check parentheses:");
+        Calculator parenthesesError = new Calculator("((100+200)*3");
+
     }
+
+    public String calcToString(boolean x) {
+        if (x) {
+        System.out.println("--------");
+        System.out.println("Result: " + this.expression + " = " + this.result);
+        System.out.println("Tokens: " + this.tokens + " , RPN: " + this.reverse_polish);
+        }
+
+        String output = this.expression + " = " + this.result;
+        return output;
+    }
+
+    public String convertJson() {
+        String json = "{ \"Expression\": \"" + this.expression + "\", \"Tokens\": \"" + this.tokens + "\", \"RPN\": \"" + this.reverse_polish + "\", \"Result\": " + this.result + " }";
+        return json;
+    }
+    
 }
+
