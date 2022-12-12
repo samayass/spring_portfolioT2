@@ -19,7 +19,7 @@ public class CalculatorAPIController {
         } catch (RuntimeException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
-            return new ResponseEntity<>("Internal Error/Parsing Error, check your expression", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Internal Error check expression", HttpStatus.BAD_REQUEST);
         }
     }
 }

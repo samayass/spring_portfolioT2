@@ -179,20 +179,20 @@ public class Calculator {
     }
 
     // calculates values
-    public double calculate(String operator, double x1, double x2) {
+    public double calculate(String operator, double a, double b) {
         switch (operator) {
             case "+":
-                return x1 + x2;
+                return a + b;
             case "-":
-                return x1 - x2;
+                return a - b;
             case "*":
-                return x1 * x2;
+                return a * b;
             case "/":
-                return x1 / x2;
+                return a / b;
             case "%":
-                return x1 % x2;
+                return a % b;
             case "^":
-                return Math.pow(x1, x2);
+                return Math.pow(a, b);
             default:
                 throw new RuntimeException("Unsupported operator: " + operator);
         }
@@ -208,12 +208,12 @@ public class Calculator {
             // If the token is an operator, calculate
             if (isOperator(token)) {
                 // Pop the two top entries
-                double x2 = Double.valueOf(calcStack.pop());
-                double x1 = Double.valueOf(calcStack.pop());
+                double a = Double.valueOf(calcStack.pop());
+                double b = Double.valueOf(calcStack.pop());
 
                 // Calculate intermediate results
                 result = 0.0;
-                result = calculate(token, x1, x2);
+                result = calculate(token, a, b);
 
                 // Push intermediate result back onto the stack
                 calcStack.push(result);
