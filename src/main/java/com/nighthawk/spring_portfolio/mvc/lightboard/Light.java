@@ -63,13 +63,6 @@ public class Light {
          );
     }
 
-    public void setRGB(short r, short g, short b) {
-        this.red = r;
-        this.green = g;
-        this.blue = b;
-    }
-    
-
     /* toString output as key/values */
     public String toString() {
         return( "{" + 
